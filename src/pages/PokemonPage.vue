@@ -26,7 +26,7 @@ export default {
       this.pokemons = await getPokemonOptions()
       
       const pokId = Math.floor(Math.random() * 4 )
-      this.pokemon = this.pokemons[pokId]
+      this.pokemon = this.pokemons[pokId
     }
   },
   mounted(){
