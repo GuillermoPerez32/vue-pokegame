@@ -1,6 +1,6 @@
 <template>
-    <img class="hidden-pokemon" :src="imgSrc" alt="" v-if="!is_hidden">
-    <img class="" :src="imgSrc" alt="" v-if="is_hidden">
+    <img class="hidden-pokemon" :src="imgSrc" alt="" v-if="!showPokemon">
+    <img class="" :src="imgSrc" alt="" v-if="showPokemon">
 </template>
 
 <script>
@@ -11,10 +11,15 @@ export default {
             type: Number,
             required: true,
         },
+        showPokemon: {
+            type: Boolean,
+            required: true
+        }
     },
+
     data() {
         return {
-            is_hidden: false,
+            // is_hidden: false,
         }
     },
     computed: {
