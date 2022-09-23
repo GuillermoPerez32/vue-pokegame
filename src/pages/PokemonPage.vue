@@ -2,9 +2,14 @@
   <h1 v-if="!pokemon">Esperando...</h1>
 
   <div v-else>
-  <h1>¿Quién es este pokemón?</h1>
-    <PokemonPicture :pokemonId="pokemon.id" :showPokemon="showPokemon"/>
-    <PokemonOptions :pokemons="pokemons" :pokemon="pokemon" />
+    <h1>¿Quién es este pokemón?</h1>
+    <PokemonPicture :pokemonId="pokemon.id" :showPokemon="showPokemon" />
+    <PokemonOptions :pokemons="pokemons" :pokemon="pokemon" @selection-pokemon="checkAnwer" />
+    <template v-if="showAnswer" class="fade-in">
+
+      <h2>{{message}}</h2>
+      <button @click="newGame">Otra Vez</button>
+    </template>
   </div>
 </template>
 
@@ -18,18 +23,38 @@ export default {
     return {
       pokemons: [],
       pokemon: null,
-      showPokemon: false
+      showPokemon: false,
+      showAnswer: false,
+      message: '',
+
     }
   },
   methods: {
     async getPokemons() {
       this.pokemons = await getPokemonOptions()
-      
-      const pokId = Math.floor(Math.random() * 4 )
+
+      const pokId = Math.floor(Math.random() * 4)
       this.pokemon = this.pokemons[pokId]
+    },
+    checkAnwer(pokemonId) {
+      console.log(`checking ${pokemonId}`);
+      this.showPokemon = true;
+      const encabezado = this.pokemon.id == pokemonId ? 'Bien!!!' : 'Oh vaya :( !!!'
+      this.message = `${encabezado} El pokemon es ${this.pokemon.name}`
+
+      this.showAnswer = true
+      console.log('checked');
+    },
+    async newGame() {
+      this.pokemons = []
+      this.pokemon = null
+      this.showPokemon = false
+      this.showAnswer = false
+      this.message = ''
+      await this.getPokemons()
     }
   },
-  mounted(){
+  mounted() {
     this.getPokemons()
     // console.log(pokemons);
   }

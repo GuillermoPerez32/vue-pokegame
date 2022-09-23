@@ -1,6 +1,6 @@
 <template>
     <img class="hidden-pokemon" :src="imgSrc" alt="" v-if="!showPokemon">
-    <img class="" :src="imgSrc" alt="" v-if="showPokemon">
+    <img class="fade-in" :src="imgSrc" alt="" v-if="showPokemon">
 </template>
 
 <script>
